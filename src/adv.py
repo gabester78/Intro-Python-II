@@ -76,22 +76,20 @@ while True:
     selection = input(
         "\nWhich direction would you like to travel? (North = n, East = e, South = s, West = w) or press q to quit the game. Type get to pick up items and drop to remove items. ")
 
-    # selection2 = selection.lower().split(" ")
-
     if selection == "q":
         print("Game over! Play again soon!")
         break
 
     elif selection == 'get':
-        player.pickup_item(items)
+        player.pickup_item(player.room.items)
         print("You have added an item to your inventory!")
 
     elif selection == 'drop':
-        player.drop_item(items)
+        player.drop_item(player.items)
         print("You dropped your inventory!")
 
     elif selection == 'inventory':
-        player.inventory(items)
+        player.player_inventory(items)
 
     elif player.room == room['outside']:
         if selection == 'n':

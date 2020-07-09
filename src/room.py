@@ -16,6 +16,7 @@ class Room():
 
     def list_items(self):
         if self.items:
-            print("This room has an item!")
+            for item in range(len(self.items)):
+                print(self.items[item].name)
         else:
             print("This room has no item.")
