@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,19 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+# # Items
+
+items = {
+    "compass": Item("Compass", """Let the earth guide you."""),
+    "canteen": Item("Canteen", """Quench your thirst."""),
+    "torch": Item("Torch", """Fire will light your way.""")
+}
+
+room['foyer'].items.append(items["compass"])
+room['narrow'].items.append(items["canteen"])
+room['overlook'].items.append(items["torch"])
+
 #
 # Main
 #
@@ -56,19 +70,34 @@ print("\nWelcome to Text Dungeon!")
 
 while True:
 
-    print(f"\n{player.name}, you're currently located at the {player.room}")
+    print(
+        f"\n{player.name}, you're currently located at the {player.room}.")
+    player.room.list_items()
     selection = input(
-        "\nWhich direction would you like to travel? (North = n, East = e, South = s, West = w) or press q to quit the game. ")
+        "\nWhich direction would you like to travel? (North = n, East = e, South = s, West = w) or press q to quit the game. Type get to pick up items and drop to remove items. ")
+
+    # selection2 = selection.lower().split(" ")
 
     if selection == "q":
         print("Game over! Play again soon!")
         break
 
-    if player.room == room['outside']:
+    elif selection == 'get':
+        player.pickup_item(items)
+        print("You have added an item to your inventory!")
+
+    elif selection == 'drop':
+        player.drop_item(items)
+        print("You dropped your inventory!")
+
+    elif selection == 'inventory':
+        player.inventory(items)
+
+    elif player.room == room['outside']:
         if selection == 'n':
             player.room = room['foyer']
         else:
-            print(f"You can't go that way.")
+            print(f"-----------------------------------------------------------------------------------------------> That way is blocked. Try again.")
 
     elif player.room == room['foyer']:
         if selection == 'n':
@@ -78,13 +107,13 @@ while True:
         elif selection == 'e':
             player.room = room['narrow']
         else:
-            print(f"You can't go that way.")
+            print(f"-----------------------------------------------------------------------------------------------> That way is blocked. Try again.")
 
     elif player.room == room['overlook']:
         if selection == 's':
             player.room = room['foyer']
         else:
-            print(f"You can't go that way.")
+            print(f"-----------------------------------------------------------------------------------------------> That way is blocked. Try again.")
 
     elif player.room == room['narrow']:
         if selection == 'w':
@@ -92,8 +121,10 @@ while True:
         elif selection == 'n':
             player.room = room['treasure']
         else:
-            print(f"You can't go that way.")
+            print(f"-----------------------------------------------------------------------------------------------> That way is blocked. Try again.")
 
     elif player.room == room['treasure']:
         if selection == 's':
             player.room = room['narrow']
+        else:
+            print(f"-----------------------------------------------------------------------------------------------> That way is blocked. Try again.")
