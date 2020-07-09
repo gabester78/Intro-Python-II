@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,9 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Gabe', room['outside'])
+
+print("\nWelcome to Text Dungeon!")
 
 # Write a loop that:
 #
@@ -49,3 +53,47 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+
+    print(f"\n{player.name}, you're currently located at the {player.room}")
+    selection = input(
+        "\nWhich direction would you like to travel? (North = n, East = e, South = s, West = w) or press q to quit the game. ")
+
+    if selection == "q":
+        print("Game over! Play again soon!")
+        break
+
+    if player.room == room['outside']:
+        if selection == 'n':
+            player.room = room['foyer']
+        else:
+            print(f"You can't go that way.")
+
+    elif player.room == room['foyer']:
+        if selection == 'n':
+            player.room = room['overlook']
+        elif selection == 's':
+            player.room = room['outside']
+        elif selection == 'e':
+            player.room = room['narrow']
+        else:
+            print(f"You can't go that way.")
+
+    elif player.room == room['overlook']:
+        if selection == 's':
+            player.room = room['foyer']
+        else:
+            print(f"You can't go that way.")
+
+    elif player.room == room['narrow']:
+        if selection == 'w':
+            player.room = room['foyer']
+        elif selection == 'n':
+            player.room = room['treasure']
+        else:
+            print(f"You can't go that way.")
+
+    elif player.room == room['treasure']:
+        if selection == 's':
+            player.room = room['narrow']
