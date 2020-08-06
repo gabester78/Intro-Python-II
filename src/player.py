@@ -10,6 +10,8 @@ class Player():
     def pickup_item(self, items):
         if len(self.room.items) > 0:
             self.items.append(items[0])
+            print('')
+            print(f'You grabbed the {items[0]}')
             self.room.items.remove(items[0])
         else:
             print(f"No items in this room.")
@@ -17,6 +19,8 @@ class Player():
     def drop_item(self, items):
         if self.items:
             self.room.items.append(items[0])
+            print('')
+            print(f'You dropped the {items[0]}')
             self.items.remove(items[0])
         else:
             print(f"You do not have any items to drop.")

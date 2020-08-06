@@ -83,15 +83,12 @@ while True:
 
     elif selection == 'get':
         player.pickup_item(player.room.items)
-        print("")
-        print("You have added an item to your inventory!")
 
     elif selection == 'drop':
         player.drop_item(player.items)
-        print("")
-        print("You dropped an item!")
 
     elif selection == 'inventory':
+        print("")
         player.player_inventory(items)
 
     elif player.room == room['outside']:
